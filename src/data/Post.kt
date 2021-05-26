@@ -61,7 +61,7 @@ object Posts {
                 yamlVisitor.data["date"]?.get(0) ?: "",
                 content,
             )
-            element.id = element.id.toMD5()
+            element.id = element.title.toMD5()
             posts.add(element)
             m[element.id] = element
         }
