@@ -7,5 +7,6 @@ RUN ./gradlew installDist
 FROM openjdk:15
 
 COPY --from=builder /project/build/install/kblogger /project
+WORKDIR /project/bin/
 
-CMD ["/project/bin/kblogger"]
+CMD ["./kblogger"]
