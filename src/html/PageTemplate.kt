@@ -1,9 +1,14 @@
 package com.tonypepe.html
 
+import com.tonypepe.data.ServerConfig
 import io.ktor.html.*
 import kotlinx.html.*
 
-class PageTemplate : Template<HTML> {
+class PageTemplate(
+    private val serverConfig: ServerConfig = ServerConfig.instance,
+    private val pageTitle: String = "KBlogger",
+    private val pageSubTitle: String = "A Blog Launch by Ktor",
+) : Template<HTML> {
     val head = Placeholder<HEAD>()
     val content = Placeholder<BODY>()
 
@@ -15,15 +20,15 @@ class PageTemplate : Template<HTML> {
             navBar()
             insert(PageHeader()) {
                 content {
-                    h1 { +"KBlogger" }
+                    h1 { +pageTitle }
                     span(classes = "subheading") {
-                        +"A Blog Launch by Ktor"
+                        +pageSubTitle
                     }
                 }
             }
             insert(content)
             comment("Footer")
-            myFooter()
+            myFooter(serverConfig.site_author)
             comment("Bootstrap core JS")
             script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js") {}
             comment("Core theme JS")
@@ -134,7 +139,7 @@ class PageHeader : Template<BODY> {
 }
 
 @HtmlTagMarker
-fun FlowContent.myFooter() {
+fun FlowContent.myFooter(author: String) {
     footer(classes = "border-top") {
         div(classes = "container px-4 px-lg-5") {
             div(classes = "row gx-4 gx-lg-5 justify-content-center") {
@@ -166,7 +171,7 @@ fun FlowContent.myFooter() {
                         }
                     }
                     div(classes = "small text-center text-muted fst-italic") {
-                        +"Copyright \u00a9 Your Website 2021"
+                        +"Copyright \u00a9 $author 2021"
                     }
                 }
             }

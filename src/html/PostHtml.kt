@@ -8,7 +8,7 @@ import kotlinx.html.div
 import kotlinx.html.unsafe
 
 fun HTML.postHtml(post: Post) {
-    insert(PageTemplate()) {
+    insert(PageTemplate(pageTitle = post.title, pageSubTitle = "")) {
         head {
             myHead(post.title)
         }

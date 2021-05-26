@@ -45,9 +45,7 @@ fun Application.module(testing: Boolean = false) {
             val s = call.parameters["id"]
             println(s)
             val post = Posts.map[s]
-            if (post == null) {
-                // TODO: 2021/5/26 404
-            } else {
+            if (post != null) {
                 call.respondHtml {
                     postHtml(post)
                 }
