@@ -27,7 +27,7 @@ class PageTemplate : Template<HTML> {
             comment("Bootstrap core JS")
             script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js") {}
             comment("Core theme JS")
-            script(src = "js/scripts.js") {}
+            script(src = "/js/scripts.js") {}
             comment("highlight.js")
             script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js") {}
             script { +"hljs.highlightAll();" }
@@ -70,7 +70,7 @@ fun HEAD.myHead(title: String) {
     )
     comment("Core theme CSS (includes Bootstrap)")
     link(
-        href = "css/styles.css",
+        href = "/css/styles.css",
         rel = "stylesheet"
     )
     comment("highlight.js")

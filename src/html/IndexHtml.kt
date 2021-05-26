@@ -12,8 +12,9 @@ fun HTML.indexHtml(posts: List<Post>) {
         content {
             insert(MainContent()) {
                 content {
-                    posts.forEach { post ->
-                        postPreview(post)
+                    val count = if (posts.count() > 3) 3 else posts.count()
+                    for (i in 0 until count) {
+                        postPreview(posts[i])
                     }
                     div(classes = "d-flex justify-content-end mb-4") {
                         a(href = "#", classes = "btn btn-outline-dark text-uppercase") {
@@ -29,7 +30,7 @@ fun HTML.indexHtml(posts: List<Post>) {
 @HtmlTagMarker
 fun FlowContent.postPreview(post: Post) {
     div(classes = "post-preview") {
-        a(href = "#") {
+        a(href = "/post/${post.id}") {
             h2(classes = "post-title") {
                 +post.title
             }

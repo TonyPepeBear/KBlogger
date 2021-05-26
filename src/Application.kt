@@ -34,9 +34,16 @@ fun Application.module(testing: Boolean = false) {
             }
         }
 
-        get("/post") {
-            call.respondHtml {
-                postHtml(Posts.data[0])
+        get("/post/{id}") {
+            val s = call.parameters["id"]
+            println(s)
+            val post = Posts.map[s]
+            if (post == null) {
+                // TODO: 2021/5/26 404
+            } else {
+                call.respondHtml {
+                    postHtml(post)
+                }
             }
         }
     }
