@@ -15,6 +15,11 @@ fun HTML.indexHtml(posts: List<Post>) {
                     posts.forEach { post ->
                         postPreview(post)
                     }
+                    div(classes = "d-flex justify-content-end mb-4") {
+                        a(href = "#", classes = "btn btn-outline-dark text-uppercase") {
+                            +"Other Posts"
+                        }
+                    }
                 }
             }
         }

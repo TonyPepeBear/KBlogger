@@ -3,6 +3,7 @@ package com.tonypepe
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.tonypepe.data.Posts
 import com.tonypepe.html.indexHtml
+import com.tonypepe.html.postHtml
 import io.ktor.application.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
@@ -29,7 +30,13 @@ fun Application.module(testing: Boolean = false) {
     routing {
         get("/") {
             call.respondHtml {
-                indexHtml(Posts.posts)
+                indexHtml(Posts.data)
+            }
+        }
+
+        get("/post") {
+            call.respondHtml {
+                postHtml(Posts.data[0])
             }
         }
     }

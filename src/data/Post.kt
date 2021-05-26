@@ -22,7 +22,7 @@ data class Post(
 )
 
 object Posts {
-    var posts = listOf<Post>()
+    var data = listOf<Post>()
 
     fun initPosts() = GlobalScope.launch(Dispatchers.IO) {
         val paths = Files.walk(Paths.get("md-content"))
@@ -51,6 +51,6 @@ object Posts {
             )
         }
 
-        this@Posts.posts = posts.sortedByDescending { it.date }
+        this@Posts.data = posts.sortedByDescending { it.date }
     }
 }
