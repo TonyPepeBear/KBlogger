@@ -5,7 +5,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.commonmark.ext.front.matter.YamlFrontMatterExtension
 import org.commonmark.ext.front.matter.YamlFrontMatterVisitor
+import org.commonmark.node.Image
 import org.commonmark.parser.Parser
+import org.commonmark.renderer.html.AttributeProvider
 import org.commonmark.renderer.html.HtmlRenderer
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -34,7 +36,16 @@ object Posts {
             .extensions(listOf(YamlFrontMatterExtension.create()))
             .build()
         val yamlVisitor = YamlFrontMatterVisitor()
-        val render = HtmlRenderer.builder().build()
+        val render = HtmlRenderer.builder()
+            .attributeProviderFactory {
+                AttributeProvider { node, tagName, attributes ->
+                    if (node is Image) {
+                        attributes["class"] = "img-fluid"
+                        attributes["alt"] = "Responsive image"
+                    }
+                }
+            }
+            .build()
 
         val posts = mutableListOf<Post>()
         val m = mutableMapOf<String, Post>()
