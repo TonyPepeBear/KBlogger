@@ -43,7 +43,6 @@ fun Application.module(testing: Boolean = false) {
 
         get("/post/{id}") {
             val s = call.parameters["id"]
-            println(s)
             val post = Posts.map[s]
             if (post != null) {
                 call.respondHtml {

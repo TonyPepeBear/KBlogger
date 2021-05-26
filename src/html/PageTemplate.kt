@@ -6,7 +6,7 @@ import kotlinx.html.*
 
 class PageTemplate(
     private val serverConfig: ServerConfig = ServerConfig.instance,
-    private val pageTitle: String = "KBlogger",
+    private val pageTitle: String = serverConfig.site_author,
     private val pageSubTitle: String = "A Blog Launch by Ktor",
 ) : Template<HTML> {
     val head = Placeholder<HEAD>()
@@ -28,7 +28,12 @@ class PageTemplate(
             }
             insert(content)
             comment("Footer")
-            myFooter(serverConfig.site_author)
+            myFooter(
+                serverConfig.site_author,
+                serverConfig.author_twitter_url,
+                serverConfig.author_facebook_url,
+                serverConfig.author_github_url
+            )
             comment("Bootstrap core JS")
             script(src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js") {}
             comment("Core theme JS")
@@ -139,14 +144,14 @@ class PageHeader : Template<BODY> {
 }
 
 @HtmlTagMarker
-fun FlowContent.myFooter(author: String) {
+fun FlowContent.myFooter(author: String, twitterURL: String = "", facebookURL: String = "", githubURL: String = "") {
     footer(classes = "border-top") {
         div(classes = "container px-4 px-lg-5") {
             div(classes = "row gx-4 gx-lg-5 justify-content-center") {
                 div(classes = "col-md-10 col-lg-8 col-xl-7") {
                     ul(classes = "list-inline text-center") {
                         li(classes = "list-inline-item") {
-                            a(href = "#!") {
+                            a(href = twitterURL) {
                                 span(classes = "fa-stack fa-lg") {
                                     i(classes = "fas fa-circle fa-stack-2x")
                                     i(classes = "fab fa-twitter fa-stack-1x fa-inverse")
@@ -154,7 +159,7 @@ fun FlowContent.myFooter(author: String) {
                             }
                         }
                         li(classes = "list-inline-item") {
-                            a(href = "#!") {
+                            a(href = twitterURL) {
                                 span(classes = "fa-stack fa-lg") {
                                     i(classes = "fas fa-circle fa-stack-2x")
                                     i(classes = "fab fa-facebook fa-stack-1x fa-inverse")
@@ -162,7 +167,7 @@ fun FlowContent.myFooter(author: String) {
                             }
                         }
                         li(classes = "list-inline-item") {
-                            a(href = "#!") {
+                            a(href = githubURL) {
                                 span(classes = "fa-stack fa-lg") {
                                     i(classes = "fas fa-circle fa-stack-2x")
                                     i(classes = "fab fa-github fa-stack-1x fa-inverse")
