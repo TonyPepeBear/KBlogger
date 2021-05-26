@@ -3,6 +3,11 @@ package com.tonypepe.html
 import com.tonypepe.data.ServerConfig
 import io.ktor.html.*
 import kotlinx.html.*
+import java.util.*
+
+const val highlightJSVersion = "10.7.2"
+
+val year: Int by lazy { Calendar.getInstance().get(Calendar.YEAR) }
 
 class PageTemplate(
     private val serverConfig: ServerConfig = ServerConfig.instance,
@@ -39,7 +44,8 @@ class PageTemplate(
             comment("Core theme JS")
             script(src = "/js/scripts.js") {}
             comment("highlight.js")
-            script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js") {}
+            script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/$highlightJSVersion/highlight.min.js") {}
+            script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/$highlightJSVersion/languages/dart.min.js") {}
             script { +"hljs.highlightAll();" }
         }
     }
@@ -85,7 +91,7 @@ fun HEAD.myHead(title: String) {
     )
     comment("highlight.js")
     link(
-        href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/darcula.min.css",
+        href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/$highlightJSVersion/styles/darcula.min.css",
         rel = "stylesheet"
     )
 }
@@ -176,7 +182,7 @@ fun FlowContent.myFooter(author: String, twitterURL: String = "", facebookURL: S
                         }
                     }
                     div(classes = "small text-center text-muted fst-italic") {
-                        +"Copyright \u00a9 $author 2021"
+                        +"Copyright \u00a9 $author $year"
                     }
                 }
             }

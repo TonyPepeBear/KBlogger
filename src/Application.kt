@@ -13,6 +13,7 @@ import io.ktor.html.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.jackson.*
+import io.ktor.response.*
 import io.ktor.routing.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -49,6 +50,11 @@ fun Application.module(testing: Boolean = false) {
                     postHtml(post)
                 }
             }
+        }
+
+        get("reload") {
+            Posts.forceReload()
+            call.respondRedirect("/")
         }
     }
 

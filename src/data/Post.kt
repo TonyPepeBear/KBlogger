@@ -82,4 +82,9 @@ object Posts {
         this@Posts.data = posts.sortedByDescending { it.date }
         this@Posts.map = m
     }
+
+    suspend fun forceReload() {
+        File("md-content").deleteRecursively()
+        initPosts().join()
+    }
 }
