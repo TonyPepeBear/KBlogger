@@ -9,6 +9,8 @@ import org.commonmark.node.Image
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.AttributeProvider
 import org.commonmark.renderer.html.HtmlRenderer
+import org.eclipse.jgit.api.Git
+import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.io.path.extension
@@ -29,13 +31,18 @@ object Posts {
     var map = mapOf<String, Post>()
 
     fun initPosts() = GlobalScope.launch(Dispatchers.IO) {
+        if (File("md-content").exists().not()) {
+            Git.cloneRepository()
+                .setURI(ServerConfig.instance.git_repo_url)
+                .setDirectory(File("md-content"))
+                .call()
+        }
         val paths = Files.walk(Paths.get("md-content"))
             .filter { it.isRegularFile() && it.extension == "md" }
             .toList()
         val parser = Parser.builder()
             .extensions(listOf(YamlFrontMatterExtension.create()))
             .build()
-        val yamlVisitor = YamlFrontMatterVisitor()
         val render = HtmlRenderer.builder()
             .attributeProviderFactory {
                 AttributeProvider { node, tagName, attributes ->
@@ -50,6 +57,7 @@ object Posts {
         val posts = mutableListOf<Post>()
         val m = mutableMapOf<String, Post>()
         paths.forEach { path ->
+            val yamlVisitor = YamlFrontMatterVisitor()
             val text = path.readText()
             val parse = parser.parse(text)
             parse.accept(yamlVisitor)
@@ -61,9 +69,14 @@ object Posts {
                 yamlVisitor.data["date"]?.get(0) ?: "",
                 content,
             )
+            if (element.title.isBlank()) {
+                return@forEach
+            }
+            println(element.title)
             element.id = element.title.toMD5()
             posts.add(element)
             m[element.id] = element
+            yamlVisitor.data
         }
 
         this@Posts.data = posts.sortedByDescending { it.date }
