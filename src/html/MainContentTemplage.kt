@@ -4,7 +4,7 @@ import io.ktor.html.*
 import kotlinx.html.FlowContent
 import kotlinx.html.div
 
-class MainContent : Template<FlowContent> {
+class MainContentTemplage : Template<FlowContent> {
     val content = Placeholder<FlowContent>()
 
     override fun FlowContent.apply() {

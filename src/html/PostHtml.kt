@@ -14,7 +14,7 @@ fun HTML.postHtml(post: Post) {
         }
         content {
             article(classes = "mb-4") {
-                insert(MainContent()) {
+                insert(MainContentTemplage()) {
                     content {
                         div {
                             unsafe { +post.htmlContent }
@@ -26,3 +26,19 @@ fun HTML.postHtml(post: Post) {
     }
 }
 
+fun HTML.postListHtml(posts: List<Post>) {
+    insert(PageTemplate(pageTitle = "All Posts", pageSubTitle = "Keep on posting. ${posts.count()} posts in total.")) {
+        head {
+            myHead("All Posts")
+        }
+        content {
+            insert(MainContentTemplage()) {
+                content {
+                    posts.forEach {
+                        postPreview(it)
+                    }
+                }
+            }
+        }
+    }
+}

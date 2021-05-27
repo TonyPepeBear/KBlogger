@@ -5,6 +5,7 @@ import com.tonypepe.data.Posts
 import com.tonypepe.html.indexHtml
 import com.tonypepe.html.notFoundHtml
 import com.tonypepe.html.postHtml
+import com.tonypepe.html.postListHtml
 import io.ktor.application.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
@@ -50,6 +51,10 @@ fun Application.module(testing: Boolean = false) {
                     postHtml(post)
                 }
             }
+        }
+
+        get("/posts") {
+            call.respondHtml { postListHtml(Posts.data) }
         }
 
         get("reload") {

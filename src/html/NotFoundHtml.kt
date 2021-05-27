@@ -9,7 +9,7 @@ fun HTML.notFoundHtml(message: String = "") {
     insert(PageTemplate()) {
         head { myHead("404 Not Found") }
         content {
-            insert(MainContent()) {
+            insert(MainContentTemplage()) {
                 content {
                     h1 {
                         +"404 Not Fount"
