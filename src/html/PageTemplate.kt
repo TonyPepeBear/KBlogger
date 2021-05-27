@@ -46,6 +46,7 @@ class PageTemplate(
             comment("highlight.js")
             script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/$highlightJSVersion/highlight.min.js") {}
             script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/$highlightJSVersion/languages/dart.min.js") {}
+            script(src = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/$highlightJSVersion/languages/gradle.min.js") {}
             script { +"hljs.highlightAll();" }
         }
     }
