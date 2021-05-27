@@ -15,6 +15,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.io.path.extension
 import kotlin.io.path.isRegularFile
+import kotlin.io.path.name
 import kotlin.io.path.readText
 import kotlin.streams.toList
 
@@ -70,6 +71,7 @@ object Posts {
                 content,
             )
             if (element.title.isBlank()) {
+                println("Skip: ${path.name}")
                 return@forEach
             }
             println(element.title)
