@@ -12,7 +12,7 @@ fun HTML.indexHtml(posts: List<Post>) {
         content {
             insert(MainContent()) {
                 content {
-                    val count = if (posts.count() > 3) 3 else posts.count()
+                    val count = if (posts.count() > 6) 6 else posts.count()
                     for (i in 0 until count) {
                         postPreview(posts[i])
                     }

@@ -65,9 +65,9 @@ object Posts {
             val content = render.render(parse)
 
             val element = Post(
-                yamlVisitor.data["title"]?.get(0) ?: "",
-                yamlVisitor.data["preview"]?.get(0) ?: "",
-                yamlVisitor.data["date"]?.get(0) ?: "",
+                yamlVisitor.data["title"]?.getOrNull(0) ?: "",
+                yamlVisitor.data["preview"]?.getOrNull(0) ?: "",
+                yamlVisitor.data["date"]?.getOrNull(0) ?: "",
                 content,
             )
             if (element.title.isBlank()) {
