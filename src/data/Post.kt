@@ -5,6 +5,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.commonmark.ext.front.matter.YamlFrontMatterExtension
 import org.commonmark.ext.front.matter.YamlFrontMatterVisitor
+import org.commonmark.ext.gfm.tables.TablesExtension
 import org.commonmark.node.Image
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.AttributeProvider
@@ -41,8 +42,9 @@ object Posts {
         val paths = Files.walk(Paths.get("md-content"))
             .filter { it.isRegularFile() && it.extension == "md" }
             .toList()
+        val extensions = listOf(YamlFrontMatterExtension.create(), TablesExtension.create())
         val parser = Parser.builder()
-            .extensions(listOf(YamlFrontMatterExtension.create()))
+            .extensions(extensions)
             .build()
         val render = HtmlRenderer.builder()
             .attributeProviderFactory {
@@ -51,8 +53,12 @@ object Posts {
                         attributes["class"] = "img-fluid"
                         attributes["alt"] = "Responsive image"
                     }
+                    if (tagName == "table") {
+                        attributes["class"] = "table table-striped table-bordered"
+                    }
                 }
             }
+            .extensions(extensions)
             .build()
 
         val posts = mutableListOf<Post>()

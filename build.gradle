@@ -48,6 +48,7 @@ dependencies {
     // commonmark
     implementation "org.commonmark:commonmark:$commonmark_version"
     implementation "org.commonmark:commonmark-ext-yaml-front-matter:$commonmark_version"
+    implementation "org.commonmark:commonmark-ext-gfm-tables:$commonmark_version"
 
     // JGit
     implementation group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '5.11.1.202105131744-r'
