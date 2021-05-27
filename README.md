@@ -1,10 +1,10 @@
 # KBlogger
 
-A blog launch by ktor.
+A blog launch by Ktor.
 
 ## Quick Use
 
-Just set `config.yaml` and run it with Docker(Recommend). Below is sample:
+Just set `config.yaml` and run it with Docker(Recommend). Below is a sample:
 
 ``` yaml
 site_title: TonyPepe Blog
@@ -16,7 +16,7 @@ author_facebook_url: https://github.com/TonyPepeBear
 author_twitter_url: https://github.com/TonyPepeBear
 ```
 
-KBlogger will clone all file in GitRepo and render all of the `*.md` file.
+KBlogger will clone all files in GitRepo and render all of the `*.md` file.
 
 Your markdown file must have `yaml-front-matter`. And must have `title` tag, if not, that file will be ignored.
 
