@@ -24,6 +24,7 @@ import kotlin.system.measureTimeMillis
 object Posts {
     var data = listOf<Post>()
     var map = mapOf<String, Post>()
+    var tags = mapOf<String, Int>()
 
     fun initPosts() = GlobalScope.launch(Dispatchers.IO) {
         val time = measureTimeMillis {
@@ -57,18 +58,31 @@ object Posts {
 
             val posts = mutableListOf<Post>()
             val m = mutableMapOf<String, Post>()
+            val tgs = mutableMapOf<String, Int>()
             paths.forEach { path ->
                 val yamlVisitor = YamlFrontMatterVisitor()
                 val text = path.readText()
                 val parse = parser.parse(text)
                 parse.accept(yamlVisitor)
                 val content = render.render(parse)
+                val tagList = mutableListOf<String>()
+
+                yamlVisitor.data["tag"]?.forEach {
+                    val lower = it.lowercase()
+                    tagList.add(lower)
+                    if (tgs.containsKey(lower)) {
+                        tgs[lower] = tgs[lower]!! + 1
+                    } else {
+                        tgs[lower] = 1
+                    }
+                }
 
                 val element = Post(
                     yamlVisitor.data["title"]?.getOrNull(0) ?: "",
                     yamlVisitor.data["preview"]?.getOrNull(0) ?: "",
                     yamlVisitor.data["date"]?.getOrNull(0) ?: "",
                     content,
+                    tagList
                 )
                 if (element.title.isBlank()) {
                     println("Skip: ${path.name}")
@@ -78,9 +92,12 @@ object Posts {
                 element.id = element.title.toMD5()
                 posts.add(element)
                 m[element.id] = element
-                yamlVisitor.data
-                this@Posts.data = posts.sortedByDescending { it.date }
-                this@Posts.map = m
+            }
+            this@Posts.data = posts.sortedByDescending { it.date }
+            this@Posts.map = m
+            this@Posts.tags = tgs
+            tgs.forEach { (t, u) ->
+                println("$t -> $u")
             }
         }
         println("Total used: ${time / 1000}.${time % 1000} seconds")

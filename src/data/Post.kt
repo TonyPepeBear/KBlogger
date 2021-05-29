@@ -5,5 +5,6 @@ data class Post(
     val preview: String,
     val date: String,
     val htmlContent: String,
+    val tags: List<String>,
     var id: String = ""
 )

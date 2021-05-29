@@ -2,10 +2,7 @@ package com.tonypepe.html
 
 import com.tonypepe.data.Post
 import io.ktor.html.*
-import kotlinx.html.HTML
-import kotlinx.html.article
-import kotlinx.html.div
-import kotlinx.html.unsafe
+import kotlinx.html.*
 
 fun HTML.postHtml(post: Post) {
     insert(PageTemplate(pageTitle = post.title, pageSubTitle = "")) {
@@ -18,6 +15,15 @@ fun HTML.postHtml(post: Post) {
                     content {
                         div {
                             unsafe { +post.htmlContent }
+                        }
+                        hr(classes = "my-4")
+                        div(classes = "justify-content-center") {
+                            post.tags.forEach { tag ->
+                                a(classes = "border-bottom") {
+                                    +"#$tag"
+                                }
+                                unsafe { +"&emsp;" }
+                            }
                         }
                     }
                 }
