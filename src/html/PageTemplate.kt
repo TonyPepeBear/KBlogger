@@ -184,6 +184,11 @@ fun FlowContent.myFooter(author: String, twitterURL: String = "", facebookURL: S
                     }
                     div(classes = "small text-center text-muted fst-italic") {
                         +"Copyright \u00a9 $author $year"
+                        br()
+                        +("Powered by ")
+                        a(href = "https://github.com/TonyPepeBear/KBlogger") {
+                            +"KBlogger"
+                        }
                     }
                 }
             }
