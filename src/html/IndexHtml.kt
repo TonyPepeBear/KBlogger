@@ -10,7 +10,7 @@ fun HTML.indexHtml(posts: List<Post>) {
             myHead("KBlogger")
         }
         content {
-            insert(MainContentTemplage()) {
+            insert(MainContentTemplate()) {
                 content {
                     val count = if (posts.count() > 6) 6 else posts.count()
                     for (i in 0 until count) {

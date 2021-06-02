@@ -8,7 +8,7 @@ fun HTML.tagsPageHtml(tags: Map<String, Int>) {
     insert(PageTemplate()) {
         head { myHead("Tags") }
         content {
-            insert(MainContentTemplage()) {
+            insert(MainContentTemplate()) {
                 content {
                     tags.keys.forEach {
                         div(classes = "chip chip-md success-color white-text  example z-depth-2 mr-0") {

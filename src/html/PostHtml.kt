@@ -11,7 +11,7 @@ fun HTML.postHtml(post: Post) {
         }
         content {
             article(classes = "mb-4") {
-                insert(MainContentTemplage()) {
+                insert(MainContentTemplate()) {
                     content {
                         div {
                             unsafe { +post.htmlContent }
@@ -38,7 +38,7 @@ fun HTML.postListHtml(posts: List<Post>) {
             myHead("All Posts")
         }
         content {
-            insert(MainContentTemplage()) {
+            insert(MainContentTemplate()) {
                 content {
                     posts.forEach {
                         postPreview(it)
